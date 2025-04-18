@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Transcript - #11</title>
+    <style>
+        :root {
+            --background-primary: #1e1f22;
+            --background-secondary: #111214;
+            --background-tertiary: #0c0d0f;
+            --channeltextarea-background: #1e1f22;
+            --interactive-normal: #b5bac1;
+            --interactive-hover: #dcddde;
+            --interactive-active: #ffffff;
+            --text-normal: #e0e1e5;
+            --text-muted: #949ba4;
+            --header-primary: #ffffff;
+            --header-secondary: #b5bac1;
+            --brand-experiment: #5865f2;
+            --brand-experiment-hover: #4752c4;
+            --brand-experiment-active: #3c45a5;
+            --green: #23a559;
+            --red: #f23f42;
+            --yellow: #f0b232;
+        }
+        body {
+            font-family: 'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--background-tertiary);
+            color: var(--text-normal);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+        body.light-theme {
+            --background-primary: #f8f9fa;
+            --background-secondary: #ebedef;
+            --background-tertiary: #e3e5e8;
+            --channeltextarea-background: #ffffff;
+            --text-normal: #2e3338;
+            --text-muted: #747f8d;
+            --header-primary: #060607;
+            --header-secondary: #4f5660;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .transcript-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .theme-toggle-container {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .theme-toggle {
+            background: var(--background-secondary);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--interactive-normal);
+            transition: background-color 0.2s ease;
+        }
+        .theme-toggle:hover {
+            background: var(--background-primary);
+            color: var(--interactive-hover);
+        }
+        .theme-icon {
+            width: 20px;
+            height: 20px;
+        }
+        body:not(.light-theme) .light-icon { display: none; }
+        body.light-theme .dark-icon { display: none; }
+        .guild-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 16px;
+        }
+        .header-info { flex: 1; }
+        .guild-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--header-primary);
+            margin: 0;
+        }
+        .channel-name {
+            font-size: 1.2rem;
+            color: var(--header-secondary);
+            margin: 0;
+        }
+        .transcript-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+        .messages-container {
+            padding: 16px;
+            background-color: var(--background-secondary);
+            border-radius: 8px;
+        }
+        /* Enhanced styles */
+        
+    /* Modern Discord UI Styles - 2025 Version */
+    :root {
+        --background-primary: #313338;
+        --background-secondary: #2b2d31;
+        --background-tertiary: #1e1f22;
+        --channeltextarea-background: #383a40;
+        --interactive-normal: #b5bac1;
+        --interactive-hover: #dcddde;
+        --interactive-active: #ffffff;
+        --text-normal: #f2f3f5;
+        --text-muted: #949ba4;
+        --header-primary: #ffffff;
+        --header-secondary: #b5bac1;
+        --brand-experiment: #5865f2;
+        --brand-experiment-hover: #4752c4;
+        --brand-experiment-active: #3c45a5;
+        --green: #23a559;
+        --red: #f23f42;
+        --yellow: #f0b232;
+    }
+    
+    body {
+        font-family: 'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: var(--background-tertiary);
+        color: var(--text-normal);
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .transcript-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .guild-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 16px;
+        background-color: var(--background-secondary);
+    }
+    
+    .header-info {
+        flex: 1;
+    }
+    
+    .guild-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--header-primary);
+        margin: 0;
+    }
+    
+    .channel-name {
+        font-size: 1.2rem;
+        color: var(--header-secondary);
+        margin: 0;
+    }
+    
+    .transcript-info {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-top: 8px;
+    }
+    
+    #transcript {
+        background-color: var(--background-primary);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    /* General message styles */
+    .message {
+        display: flex;
+        padding: 10px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    
+    .message:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+    
+    .message-avatar {
+        width: 40px;
+        height: 40px;
+        margin-right: 16px;
+        flex-shrink: 0;
+    }
+    
+    .message-avatar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .message-body {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .message-header {
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 4px;
+    }
+    
+    .message-author {
+        font-weight: 500;
+        color: var(--header-primary);
+        margin-right: 8px;
+    }
+    
+    .message-timestamp {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+    
+    .message-content {
+        color: var(--text-normal);
+        font-size: 1rem;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        margin-bottom: 8px;
+    }
+    
+    .message-highlight {
+        background-color: rgba(250, 166, 26, 0.05);
+    }
+    
+    /* Author badges */
+    .author-badge {
+        display: inline-block;
+        font-size: 0.625rem;
+        padding: 1px 4px;
+        border-radius: 3px;
+        margin-left: 4px;
+        font-weight: 700;
+        vertical-align: middle;
+    }
+    
+    .bot-badge {
+        background-color: #5865F2;
+        color: white;
+    }
+    
+    .verified-badge {
+        background-color: #3BA55C;
+        color: white;
+    }
+    
+    .webhook-badge {
+        background-color: #72767d;
+        color: white;
+    }
+    
+    .owner-badge {
+        background-color: #faa61a;
+        color: white;
+    }
+    
+    .server-badge {
+        background-color: #747f8d;
+        color: white;
+    }
+    
+    .command-badge {
+        background-color: #5865F2;
+        color: white;
+    }
+    
+    /* System messages */
+    .system-message {
+        display: flex;
+        align-items: center;
+        padding: 8px 16px;
+        margin-bottom: 8px;
+        background-color: rgba(255, 255, 255, 0.03);
+        border-radius: 4px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .system-icon {
+        margin-right: 8px;
+        font-size: 1.25rem;
+    }
+    
+    .system-content {
+        flex: 1;
+    }
+    
+    /* Discord-style reply formatting */
+    .discord-reply {
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+    
+    .discord-reply-icon {
+        margin-right: 4px;
+        transform: scaleX(-1);
+    }
+    
+    .discord-reply-username {
+        color: var(--brand-experiment);
+        font-weight: 500;
+        margin-right: 4px;
+    }
+    
+    .discord-reply-content {
+        color: var(--text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 340px;
+    }
+    
+    .reply-author {
+        font-weight: 500;
+        margin-right: 8px;
+    }
+    
+    .reply-content {
+        color: rgba(255, 255, 255, 0.7);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    /* Command replies */
+    .command-reply {
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+        padding: 4px 8px;
+        background-color: rgba(88, 101, 242, 0.1);
+        border-radius: 4px;
+        font-size: 0.875rem;
+    }
+    
+    .command-reply-icon {
+        margin-right: 4px;
+    }
+    
+    .command-reply-avatar {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+    }
+    
+    .command-reply-avatar img {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .command-reply-user {
+        font-weight: 500;
+        margin-right: 4px;
+    }
+    
+    .command-reply-text {
+        color: rgba(255, 255, 255, 0.7);
+        margin-right: 4px;
+    }
+    
+    .command-reply-name {
+        font-weight: 500;
+        color: #5865F2;
+    }
+    
+    /* Attachments */
+    .attachments {
+        margin-bottom: 8px;
+    }
+    
+    .attachment {
+        margin-bottom: 8px;
+        max-width: 520px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    
+    .attachment-content {
+        margin-bottom: 4px;
+    }
+    
+    .attachment-content img {
+        max-width: 100%;
+        max-height: 350px;
+        border-radius: 4px;
+    }
+    
+    .attachment-footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .attachment.image .attachment-content {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+    
+    .attachment.video video,
+    .attachment.audio audio {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 4px;
+    }
+    
+    .attachment.file .attachment-content {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        padding: 12px;
+    }
+    
+    .file-download {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .file-icon {
+        font-size: 1.5rem;
+        margin-right: 8px;
+    }
+    
+    .file-details {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .file-filename {
+        font-weight: 500;
+    }
+    
+    .file-filesize {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Embeds */
+    .embeds {
+        margin-bottom: 8px;
+    }
+    
+    .embed {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 8px;
+        max-width: 520px;
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+    }
+    
+    .embed-color-pill {
+        width: 4px;
+        flex-shrink: 0;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    
+    .embed-content {
+        display: flex;
+        margin-left: 4px;
+        padding: 12px 16px;
+        position: relative;
+    }
+    
+    .embed-content-inner {
+        flex: 1;
+    }
+    
+    .embed-author {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    
+    .embed-author-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+        border-radius: 50%;
+    }
+    
+    .embed-author-name {
+        font-weight: 500;
+        font-size: 0.875rem;
+    }
+    
+    .embed-title {
+        font-weight: 600;
+        color: var(--header-primary);
+        margin-bottom: 8px;
+    }
+    
+    .embed-title a {
+        color: inherit;
+    }
+    
+    .embed-description {
+        color: var(--text-normal);
+        font-size: 0.9375rem;
+        margin-bottom: 8px;
+    }
+    
+    .embed-fields {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .embed-field {
+        font-size: 0.875rem;
+    }
+    
+    .embed-field:not(.embed-field-inline) {
+        grid-column: 1 / -1;
+    }
+    
+    .embed-field-name {
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+    
+    .embed-thumbnail {
+        margin-left: 16px;
+        flex-shrink: 0;
+        width: 80px;
+        height: 80px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    
+    .embed-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .embed-image {
+        margin-top: 8px;
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    
+    .embed-image img {
+        max-width: 100%;
+        max-height: 300px;
+    }
+    
+    .embed-footer {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+        padding: 0 16px 12px;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .embed-footer-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+        border-radius: 50%;
+    }
+    
+    /* Message components */
+    .message-components {
+        margin-bottom: 8px;
+    }
+    
+    .component-action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .component-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 16px;
+        min-height: 32px;
+        min-width: 60px;
+        border-radius: 3px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: default;
+        border: none;
+        outline: none;
+    }
+    
+    .button-primary {
+        background-color: #5865F2;
+        color: white;
+    }
+    
+    .button-secondary {
+        background-color: #4F545C;
+        color: white;
+    }
+    
+    .button-success {
+        background-color: #3BA55C;
+        color: white;
+    }
+    
+    .button-danger {
+        background-color: #ED4245;
+        color: white;
+    }
+    
+    .button-link {
+        background-color: transparent;
+        color: white;
+        text-decoration: none;
+    }
+    
+    .component-emoji {
+        margin-right: 8px;
+        font-size: 1.25em;
+    }
+    
+    .component-select {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+    }
+    
+    .select-menu {
+        width: 100%;
+        padding: 8px 12px;
+        background-color: #2f3136;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        border-radius: 3px;
+        color: white;
+        font-size: 0.875rem;
+        appearance: none;
+    }
+    
+    .select-arrow {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+    
+    .component-text-input {
+        margin-bottom: 8px;
+        width: 100%;
+        max-width: 500px;
+    }
+    
+    .component-text-input label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .component-text-input input,
+    .component-text-input textarea {
+        width: 100%;
+        padding: 8px 12px;
+        background-color: #2f3136;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        border-radius: 3px;
+        color: white;
+        font-size: 0.875rem;
+        resize: vertical;
+    }
+    
+    .component-text-input textarea {
+        min-height: 80px;
+    }
+    
+    /* Reactions */
+    .reactions {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 4px;
+        gap: 4px;
+    }
+    
+    .reaction {
+        display: flex;
+        align-items: center;
+        background-color: var(--background-secondary);
+        border-radius: 8px;
+        padding: 0 8px;
+        height: 24px;
+        font-size: 0.85rem;
+    }
+    
+    .reaction-emoji {
+        margin-right: 4px;
+    }
+    
+    .reaction-count {
+        color: var(--text-muted);
+    }
+    
+    /* Threads */
+    .message-thread {
+        margin-top: 8px;
+        padding: 8px 12px;
+        background-color: rgba(255, 255, 255, 0.03);
+        border-radius: 4px;
+    }
+    
+    .thread-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    
+    .thread-icon {
+        margin-right: 8px;
+    }
+    
+    .thread-name {
+        font-weight: 500;
+        margin-right: auto;
+    }
+    
+    .thread-message-count {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .thread-last-message {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .thread-last-message-author {
+        font-weight: 500;
+        margin-right: 4px;
+    }
+    
+    .thread-no-messages {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-style: italic;
+    }
+    
+    /* Mentions */
+    .mention {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 2px;
+        border-radius: 3px;
+        background-color: rgba(88, 101, 242, 0.3);
+        color: #dee0fc;
+        font-weight: 500;
+    }
+    
+    .mention.user:hover,
+    .mention.role:hover,
+    .mention.channel:hover {
+        background-color: rgba(88, 101, 242, 0.7);
+        color: white;
+    }
+    
+    .mention.role[style*="color"] {
+        background-color: rgba(var(--role-color), 0.1);
+    }
+    
+    .mention.role[style*="color"]:hover {
+        background-color: rgba(var(--role-color), 0.3);
+    }
+    
+    /* Code blocks and inline code */
+    code {
+        font-family: 'Consolas', 'Courier New', Courier, monospace;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.85em;
+    }
+    
+    pre {
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 0.5em;
+        border-radius: 4px;
+        overflow-x: auto;
+        margin: 0.5em 0;
+    }
+    
+    pre code {
+        background-color: transparent;
+        padding: 0;
+        border-radius: 0;
+        font-size: 0.9em;
+        white-space: pre;
+    }
+    
+    /* Spoilers */
+    .spoiler {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 0 2px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    .spoiler:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Emoji */
+    .emoji {
+        vertical-align: middle;
+        height: 1.3em;
+        width: 1.3em;
+    }
+    
+    .chatContent { 
+        font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif; 
+    }
+    
+    .emoji.large-emoji {
+        width: 3em;
+        height: 3em;
+        margin: 0 0.1em;
+    }
+    
+    /* Timestamps */
+    .timestamp {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+    
+    /* Transcript footer */
+    .transcript-footer {
+        text-align: center;
+        margin-top: 20px;
+        padding: 20px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="transcript-header">
+            <img class="guild-icon" src="https://cdn.discordapp.com/icons/1343936224779436163/857282840e085d3967bb95a67a47f06a.png?size=1024" alt="Dev Dream&#x27;s server" />
+            <div class="header-info">
+                <h1 class="guild-name">Dev Dream&#x27;s server</h1>
+                <h2 class="channel-name">#11</h2>
+                <div class="transcript-info">
+                    Transcript generated on 2025-04-18 21:00:02<br>
+                    Total messages: 4
+                </div>
+            </div>
+            <div class="theme-toggle-container">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon light-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M12 9c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3m0-2c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"></path>
+                        <path fill="currentColor" d="M2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06z"></path>
+                    </svg>
+                    <svg class="theme-icon dark-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="messages-container">
+            
+        <div class="message message-highlight" id="message-1362812523233017959" data-author-id="1357296708010381412">
+            <div class="message-avatar">
+                <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="DevDream" />
+            </div>
+            <div class="message-body">
+                <div class="message-header">
+                    <span class="message-author" style="color: 0;">
+                        DevDream
+                        <span class="author-badge bot-badge">BOT</span>
+                    </span>
+                    <span class="message-timestamp" title="2025-04-18 15:30:25">
+                        2025-04-18 15:30:25
+                        
+                    </span>
+                </div>
+                
+                
+                
+                
+                <div class="message-content">&lt;@1360247414912454858&gt; Welcome to ligit our sellers shortly connect with you @here</div>
+                
+                
+        <div class="embeds">
+            
+        <div class="embed" id="embed-1362812523233017959-0">
+            <div class="embed-color-pill" style="background-color: #2ecc71;"></div>
+            <div class="embed-content">
+                <div class="embed-content-inner">
+                    
+                    
+                    <div class="embed-description">HELLO, WELCOME TO LIGIT.<br><br>PLEASE ENTER YOUR PRODUCT HERE.<br><br>PLEASE ENTER YOUR BUDGET HERE<br><br>AND USE MM FOR EVERY DEAL, USE OUR MM SERVICE FOR EVERY DEAL<br># unknown , we are also providing below 1$ service</div>
+                    
+                </div>
+                
+            </div>
+            
+            
+            <div class="embed-footer">
+                
+                <span class="embed-footer-text">LIGIT - Ticketing without clutter</span>
+            </div>
+            
+        </div>
+        
+        <div class="embed" id="embed-1362812523233017959-1">
+            <div class="embed-color-pill" style="background-color: #2f3136;"></div>
+            <div class="embed-content">
+                <div class="embed-content-inner">
+                    
+                    
+                    
+                    
+            <div class="embed-fields">
+                
+        <div class="embed-field ">
+            <div class="embed-field-name">PLEASE ENTER YOUR PRODUCT</div>
+            <div class="embed-field-value"><pre><code class="language-plaintext">11</code></pre></div>
+        </div>
+        
+        <div class="embed-field ">
+            <div class="embed-field-name">PLEASE ENTER YOUR BUDGET</div>
+            <div class="embed-field-value"><pre><code class="language-plaintext">ww</code></pre></div>
+        </div>
+        
+            </div>
+            
+                </div>
+                
+            </div>
+            
+            
+        </div>
+        
+        </div>
+        
+                
+        <div class="message-components">
+            
+        <div class="component-action-row">
+            
+            <button type="button" class="component-button button-danger" 
+                    data-custom-id="close_ticket" >
+                
+                <span class="button-label">Close Ticket</span>
+            </button>
+            
+        </div>
+        
+        </div>
+        
+                
+                
+            </div>
+        </div>
+        
+        <div class="message " id="message-1362812533358199035" data-author-id="1360247414912454858">
+            <div class="message-avatar">
+                <img src="https://cdn.discordapp.com/avatars/1360247414912454858/a55ad9afa05d1fba2476bd55e039463a.png?size=1024" alt="console" />
+            </div>
+            <div class="message-body">
+                <div class="message-header">
+                    <span class="message-author" style="color: 15158332;">
+                        console
+                        
+                    </span>
+                    <span class="message-timestamp" title="2025-04-18 15:30:27">
+                        2025-04-18 15:30:27
+                        
+                    </span>
+                </div>
+                
+                
+                
+                
+                <div class="message-content">dd</div>
+                
+                
+                
+                
+                
+            </div>
+        </div>
+        
+        <div class="message " id="message-1362812568858787950" data-author-id="1357296708010381412">
+            <div class="message-avatar">
+                <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="DevDream" />
+            </div>
+            <div class="message-body">
+                <div class="message-header">
+                    <span class="message-author" style="color: 0;">
+                        DevDream
+                        <span class="author-badge bot-badge">BOT</span>
+                    </span>
+                    <span class="message-timestamp" title="2025-04-18 15:30:36">
+                        2025-04-18 15:30:36
+                        
+                    </span>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+        <div class="embeds">
+            
+        <div class="embed" id="embed-1362812568858787950-0">
+            <div class="embed-color-pill" style="background-color: #ffcc00;"></div>
+            <div class="embed-content">
+                <div class="embed-content-inner">
+                    
+                    
+                    <div class="embed-description">Ticket Closed by &lt;@1360247414912454858&gt;</div>
+                    
+                </div>
+                
+            </div>
+            
+            
+        </div>
+        
+        </div>
+        
+                
+                
+                
+            </div>
+        </div>
+        
+        <div class="message " id="message-1362812588357976215" data-author-id="1357296708010381412">
+            <div class="message-avatar">
+                <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="DevDream" />
+            </div>
+            <div class="message-body">
+                <div class="message-header">
+                    <span class="message-author" style="color: 0;">
+                        DevDream
+                        <span class="author-badge bot-badge">BOT</span>
+                    </span>
+                    <span class="message-timestamp" title="2025-04-18 15:30:40">
+                        2025-04-18 15:30:40
+                        
+                    </span>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+        <div class="embeds">
+            
+        <div class="embed" id="embed-1362812588357976215-0">
+            <div class="embed-color-pill" style="background-color: #e74c3c;"></div>
+            <div class="embed-content">
+                <div class="embed-content-inner">
+                    
+                    
+                    <div class="embed-description">Ticket will be deleted in a few seconds</div>
+                    
+                </div>
+                
+            </div>
+            
+            
+        </div>
+        
+        </div>
+        
+                
+                
+                
+            </div>
+        </div>
+        
+        </div>
+        <div class="transcript-footer">
+            <p>End of transcript</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const root = document.documentElement;
+            // Check for saved theme preference or use default dark theme
+            const savedTheme = localStorage.getItem('discord-transcript-theme');
+            if (savedTheme === 'light') {
+                body.classList.add('light-theme');
+            }
+            // Toggle between light and dark themes
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('light-theme');
+                const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+                localStorage.setItem('discord-transcript-theme', currentTheme);
+            });
+            // Handle spoiler toggling
+            const spoilers = document.querySelectorAll('.spoiler');
+            spoilers.forEach(spoiler => {
+                spoiler.addEventListener('click', function() {
+                    this.classList.toggle('revealed');
+                });
+            });
+            // Handle timestamp display
+            const timestamps = document.querySelectorAll('.timestamp');
+            timestamps.forEach(timestamp => {
+                const ts = parseInt(timestamp.getAttribute('data-timestamp'));
+                if (!isNaN(ts)) {
+                    const date = new Date(ts * 1000);
+                    timestamp.textContent = date.toLocaleString();
+                }
+            });
+            // Add hover effect to messages
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.addEventListener('mouseenter', function() {
+                    this.classList.add('message-hover');
+                });
+                message.addEventListener('mouseleave', function() {
+                    this.classList.remove('message-hover');
+                });
+            });
+            // Add click-to-copy for message IDs
+            const messageTimestamps = document.querySelectorAll('.message-timestamp');
+            messageTimestamps.forEach(timestamp => {
+                if (timestamp.getAttribute('data-message-id')) {
+                    timestamp.style.cursor = 'pointer';
+                    timestamp.setAttribute('title', 'Click to copy message ID');
+                    timestamp.addEventListener('click', function() {
+                        const messageId = this.getAttribute('data-message-id');
+                        navigator.clipboard.writeText(messageId).then(() => {
+                            const originalTitle = this.getAttribute('title');
+                            this.setAttribute('title', 'Copied!');
+                            setTimeout(() => {
+                                this.setAttribute('title', originalTitle);
+                            }, 1000);
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
